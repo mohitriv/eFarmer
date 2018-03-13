@@ -4,16 +4,16 @@ from django.db import models
 
 # Users
 class User(models.Model):
-	username = models.CharField(max_length=100)
-	password = models.CharField(max_length=500)
-	category = models.CharField(max_length=10) # SELLER or BUYER
-	name = models.CharField(max_length=100)
-	age = models.IntegerField()
-	gender = models.CharField(max_length=10)
-	identificationNumber = models.CharField(max_length=100) # Driving license
-	address = models.CharField(max_length=500)
-	phone = models.CharField(max_length=20)
-	email = models.CharField(max_length=100)
+	username = models.CharField(max_length=100, null=False, blank=False)
+	password = models.CharField(max_length=500, null= False, blank=False)
+	category = models.CharField(max_length=10, null=False, blank=False) # SELLER or BUYER
+	name = models.CharField(max_length=100, null=False, blank=False)
+	age = models.IntegerField(null=False, blank=False)
+	gender = models.CharField(max_length=10, null=False, blank=False)
+	identificationNumber = models.CharField(max_length=100, null=False, blank=False) # e.g. Driving license
+	address = models.CharField(max_length=500, null=False, blank=False)
+	phone = models.CharField(max_length=20, null=False, blank=False)
+	email = models.CharField(max_length=100, null=False, blank=False)
 
 	def __str__(self):
 		return self.username
@@ -26,7 +26,7 @@ class Buyer(User):
 
 # Crops
 class Crop(models.Model):
-    category = models.CharField(max_length=100) # WHEAT, RICE
+    category = models.CharField(max_length=100, null=False, blank=False) # WHEAT, RICE
 
     def __str__(self):
         return self.category
