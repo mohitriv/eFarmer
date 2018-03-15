@@ -20,21 +20,30 @@ class CropDetailSerializer(serializers.ModelSerializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
-	
+	password = serializers.CharField(write_only=True, required=True)
 	class Meta:
 		model = User
-		exclude = ('password', )
+		fields = ('id', 'email', 'category', 'name', 'gender', 'identificationNumber', 'address',
+		'phone', 'date_of_birth', 'is_active', 'is_admin', 'password')
+		read_only_fields = ('date_created', 'date_modified')
 
-class SellerSerializer(serializers.ModelSerializer):
-	
-	class Meta:
+	def create(self, validated_data):
+		return User.objects.create_user(**validated_data)
+
+class SellerSerializer(UserSerializer):
+	class Meta(UserSerializer.Meta):
 		model = Seller
-		exclude = ('password', )
+		fields = UserSerializer.Meta.fields
 
-class BuyerSerializer(serializers.ModelSerializer):
-	
-	class Meta:
+	def create(self, validated_data):
+		return Seller.objects.create_user(**validated_data)
+
+class BuyerSerializer(UserSerializer):
+	class Meta(UserSerializer.Meta):
 		model = Buyer
-		exclude = ('password', )
+		fields = UserSerializer.Meta.fields
+
+	def create(self, validated_data):
+		return Buyer.objects.create_user(**validated_data)
 			
 		

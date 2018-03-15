@@ -7,21 +7,26 @@ from django.contrib.auth.models import (
 # Create your models here.
 
 # Users
-
 class UserManager(BaseUserManager):
-    def create_user(self, email, date_of_birth, password=None):
+    def create_user(self, email, password=None, **kwargs):
         """
-        Creates and saves a User with the given email, date of
-        birth and password.
+        Creates and saves a User with the given email and all other fields.
         """
         if not email:
             raise ValueError('Users must have an email address')
 
         user = self.model(
             email=self.normalize_email(email),
-            date_of_birth=date_of_birth,
+            category=kwargs.get('category', None),
+            name=kwargs.get('name', None),
+            gender=kwargs.get('gender', None),
+            identificationNumber=kwargs.get('identificationNumber', None),
+            address=kwargs.get('address', None),
+            phone=kwargs.get('phone', None),
+            date_of_birth=kwargs.get('date_of_birth', None),
+            is_active=kwargs.get('is_active', None),
+            is_admin=kwargs.get('is_admin', None),
         )
-
         user.set_password(password)
         user.save(using=self._db)
         return user
@@ -64,24 +69,20 @@ class User(AbstractBaseUser):
     REQUIRED_FIELDS = ['date_of_birth']
 
     def get_full_name(self):
-        # The user is identified by their email address
-        return self.email
+        return self.name
 
     def get_short_name(self):
-        # The user is identified by their email address
         return self.email
 
-    def __str__(self):              # __unicode__ on Python 2
+    def __str__(self):
         return self.email
 
     def has_perm(self, perm, obj=None):
         "Does the user have a specific permission?"
-        # Simplest possible answer: Yes, always
         return True
 
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
-        # Simplest possible answer: Yes, always
         return True
 
     @property
@@ -91,10 +92,10 @@ class User(AbstractBaseUser):
 
 
 class Seller(User):
-	pass
+    objects = UserManager()
 
 class Buyer(User):
-	pass
+    objects = UserManager()
 
 # Crops
 class Crop(models.Model):

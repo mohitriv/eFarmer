@@ -14,6 +14,10 @@ from django.http import Http404
 
 from rest_framework import status 
 
+from .permissions import UserEndpointPermission
+
+from rest_framework.parsers import JSONParser
+
 # Create your views here.
 
 '''
@@ -49,13 +53,27 @@ Users methods
 '''
 class UsersList(APIView):
 	
-	def get(self, request, format=None):
-		users = User.objects.all()
-		serializer = UserSerializer(users, many=True)
-		return Response(serializer.data)
+	#parser_classes = (JSONParser,)
+	permission_classes = (UserEndpointPermission,)
 
+	def getObject(self, pk):
+		try:
+			return User.objects.get(pk=pk)
+		except:
+			raise Http404
+
+	def get(self, request, format=None):
+		pk = request.user.id
+		user = self.getObject(pk)
+		serializer = UserSerializer(user)
+		return Response(serializer.data)
+   
 	def post(self, request, format=None):
-		serializer = UserSerializer(data=request.data)
+		print("print ", request.data['category'])
+		if request.data['category'].lower() == "Seller".lower():
+			serializer = SellerSerializer(data=request.data)
+		else:
+			serializer = BuyerSerializer(data=request.data)
 		if serializer.is_valid():
 			serializer.save()
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -86,6 +104,12 @@ class UsersDetail(APIView):
 		user = self.getObject(pk)
 		user.delete()
 		return Response(status=status.HTTP_204_NO_CONTENT)
+
+class Logout(APIView):
+
+	def get(self, request, format=None):
+		request.user.auth_token.delete()
+		return Response(status=status.HTTP_200_OK)
 
 '''
 GET Orders methods

@@ -10,6 +10,7 @@ urlpatterns = [
 	path('detail/<int:cropId>/', views.getCropDetail, name='CropDetailWithId'),
 	path('users/', views.UsersList.as_view(), name='AllUsers'),
 	path('users/<int:pk>/', views.UsersDetail.as_view(), name='UserWithId'),
+	path('logout/', views.Logout.as_view(), name='Logout'),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
