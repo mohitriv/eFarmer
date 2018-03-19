@@ -31,6 +31,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
+    
     def create_superuser(self, email, date_of_birth, password):
         """
         Creates and saves a superuser with the given email, date of
@@ -40,10 +41,18 @@ class UserManager(BaseUserManager):
             email,
             password=password,
             date_of_birth=date_of_birth,
+            category='Seller',
+            name='Admin',
+            gender='Male',
+            identificationNumber='admin',
+            address='admin address',
+            phone='9999999991',
+            is_active = True,
+            is_admin = True,
         )
-        user.is_admin = True
         user.save(using=self._db)
         return user
+
 
 class User(AbstractBaseUser):
     email = models.EmailField(
