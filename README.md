@@ -103,5 +103,5 @@ CropDetail object
 
 ### License:
 ```
-This project is licensed under the MIT License
+This project is licensed under the [MIT License](https://github.com/mohitriv/eFarmer/blob/master/LICENSE)
 ```
