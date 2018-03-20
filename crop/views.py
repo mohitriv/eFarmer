@@ -38,33 +38,11 @@ class CropList(APIView):
 			cropSerializer = CropSerializer(crops, many=True)
 			return JsonResponse(cropSerializer.data, safe=False)	
 
-'''
-def getCrops(request, format=None):
-	category = request.GET.get('category')
-	if category is None: # /crop/
-		# Fetch all the crops and return the Crop objects
-		crops = Crop.objects.all()
-		cropSerializer = CropSerializer(crops, many=True)
-		return JsonResponse(cropSerializer.data, safe=False)
-	else: # /crop/catogory=Rice
-		crops = Crop.objects.filter(category__icontains=category)
-		cropSerializer = CropSerializer(crops, many=True)
-		return JsonResponse(cropSerializer.data, safe=False)
-'''
-
 class CropDetail(APIView):
 	def get(self, request, pk, format=None):
 		crop = get_object_or_404(Crop, pk=pk)
 		cropSerializer = CropSerializer(crop)
 		return JsonResponse(cropSerializer.data)
-
-'''
-# Get Crop with id
-def getCropWithId(request, cropId, format=None):
-	crop = get_object_or_404(Crop, pk=cropId)
-	cropSerializer = CropSerializer(crop)
-	return JsonResponse(cropSerializer.data)
-'''
 
 '''
 class CropMetaDetail(APIView):
