@@ -21,6 +21,8 @@ class CropDetailSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
 	password = serializers.CharField(write_only=True, required=True)
+	is_active = serializers.BooleanField(required=False)
+	is_admin = serializers.BooleanField(required=False)
 	class Meta:
 		model = User
 		fields = ('id', 'email', 'category', 'name', 'gender', 'identificationNumber', 'address',

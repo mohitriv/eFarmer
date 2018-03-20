@@ -24,8 +24,8 @@ class UserManager(BaseUserManager):
             address=kwargs.get('address', None),
             phone=kwargs.get('phone', None),
             date_of_birth=kwargs.get('date_of_birth', None),
-            is_active=kwargs.get('is_active', None),
-            is_admin=kwargs.get('is_admin', None),
+            is_active=kwargs.get('is_active', True),
+            is_admin=kwargs.get('is_admin', False),
         )
         user.set_password(password)
         user.save(using=self._db)
