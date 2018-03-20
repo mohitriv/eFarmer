@@ -46,8 +46,11 @@ class CropDetail(APIView):
 
 class CropMetaDetail(APIView):
 	def get(self, request, pk, format=None):
+		print('1'*10)
 		cropDetail = get_object_or_404(CropDetail, crop__pk=pk)
+		print('2'*10)
 		cropDetailSerializer = CropDetailSerializer(cropDetail)
+		print('3'*10)
 		return JsonResponse(cropDetailSerializer.data)
 
 '''
