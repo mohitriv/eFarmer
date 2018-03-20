@@ -51,19 +51,20 @@ def getCrops(request, format=None):
 		cropSerializer = CropSerializer(crops, many=True)
 		return JsonResponse(cropSerializer.data, safe=False)
 '''
-'''
+
 class CropDetail(APIView):
 	def get(self, request, pk, format=None):
-		crop = get_object_or_404(Crop, pk=cropId)
+		crop = get_object_or_404(Crop, pk=pk)
 		cropSerializer = CropSerializer(crop)
 		return JsonResponse(cropSerializer.data)
-'''
 
+'''
 # Get Crop with id
 def getCropWithId(request, cropId, format=None):
 	crop = get_object_or_404(Crop, pk=cropId)
 	cropSerializer = CropSerializer(crop)
 	return JsonResponse(cropSerializer.data)
+'''
 
 '''
 class CropMetaDetail(APIView):
