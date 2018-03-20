@@ -22,7 +22,7 @@ class CropDetailSerializer(serializers.ModelSerializer):
 	myfield = UserLimitedSerializer() 
 	class Meta:
 		model = CropDetail
-		fields = '__all__' + 'myfield'
+		fields = ('myfield', )
 		depth = 1
 
 class UserSerializer(serializers.ModelSerializer):
