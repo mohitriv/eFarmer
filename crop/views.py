@@ -51,14 +51,6 @@ class CropMetaDetail(APIView):
 		return JsonResponse(cropDetailSerializer.data)
 
 '''
-# Get Crop detail with id
-def getCropDetail(request, cropId, format=None):
-	cropDetail = get_object_or_404(CropDetail, crop__id=cropId)
-	cropDetailSerializer = CropDetailSerializer(cropDetail)
-	return JsonResponse(cropDetailSerializer.data)
-'''
-
-'''
 Users methods
 '''
 class UsersList(APIView):
