@@ -23,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = User
 		fields = ('id', 'email', 'category', 'name', 'gender', 'identificationNumber', 'address',
-		'phone', 'date_of_birth', 'is_active', 'is_admin',)
+		'phone', 'date_of_birth', 'is_active', 'is_admin', 'password')
 		read_only_fields = ('date_created', 'date_modified')
 
 	def create(self, validated_data):
