@@ -38,7 +38,7 @@ class CropList(APIView):
 			cropSerializer = CropSerializer(crops, many=True)
 			return JsonResponse(cropSerializer.data, safe=False)	
 
-class CropDetail(APIView):
+class CropDetailWithId(APIView):
 	def get(self, request, pk, format=None):
 		crop = get_object_or_404(Crop, pk=pk)
 		cropSerializer = CropSerializer(crop)
@@ -46,11 +46,8 @@ class CropDetail(APIView):
 
 class CropMetaDetail(APIView):
 	def get(self, request, pk, format=None):
-		print('1'*10)
-		cropDetail = get_object_or_404(CropDetail, crop__pk=pk)
-		print('2'*10)
+		cropDetail = get_object_or_404(CropDetail, crop__id=pk)
 		cropDetailSerializer = CropDetailSerializer(cropDetail)
-		print('3'*10)
 		return JsonResponse(cropDetailSerializer.data)
 
 '''
@@ -112,8 +109,6 @@ class UsersDetail(APIView):
 class Logout(APIView):
 
 	def get(self, request, format=None):
-		print("userrr")
-		print(request.user.auth_token)
 		request.user.auth_token.delete()
 		return Response(status=status.HTTP_200_OK)
 
