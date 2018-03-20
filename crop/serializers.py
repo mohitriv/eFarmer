@@ -11,7 +11,6 @@ class CropSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 class CropDetailSerializer(serializers.ModelSerializer):
-	userLimitedSerializer = UserLimitedSerializer()
 	cropSerializer = CropSerializer()
 	class Meta:
 		model = CropDetail
