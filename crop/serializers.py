@@ -11,13 +11,11 @@ class CropSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 class CropDetailSerializer(serializers.ModelSerializer):
-	cropSerializer = CropSerializer()
 	class Meta:
 		model = CropDetail
-		exclude = ('password', )
+		fields = '__all__'
 		depth = 1
 	
-
 class UserSerializer(serializers.ModelSerializer):
 	password = serializers.CharField(write_only=True, required=True)
 	is_active = serializers.BooleanField(required=False)
