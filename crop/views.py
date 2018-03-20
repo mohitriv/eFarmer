@@ -24,7 +24,7 @@ from rest_framework.parsers import JSONParser
 Crops methods
 '''
 # Get all Crops
-'''
+
 class CropList(APIView):
 	def get(self, request, format=None):
 		category = request.GET.get('category')
@@ -37,8 +37,8 @@ class CropList(APIView):
 			crops = Crop.objects.filter(category__icontains=category)
 			cropSerializer = CropSerializer(crops, many=True)
 			return JsonResponse(cropSerializer.data, safe=False)	
-'''
 
+'''
 def getCrops(request, format=None):
 	category = request.GET.get('category')
 	if category is None: # /crop/
@@ -50,7 +50,7 @@ def getCrops(request, format=None):
 		crops = Crop.objects.filter(category__icontains=category)
 		cropSerializer = CropSerializer(crops, many=True)
 		return JsonResponse(cropSerializer.data, safe=False)
-
+'''
 '''
 class CropDetail(APIView):
 	def get(self, request, pk, format=None):
