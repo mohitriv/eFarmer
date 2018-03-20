@@ -1,6 +1,7 @@
 # eFarmer
 
 ## API endpoints
+Test these APIs with any rest client
 
 ### POST /crop/users – This will create a new user
 ```
