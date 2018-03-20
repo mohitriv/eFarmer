@@ -9,21 +9,13 @@ class CropSerializer(serializers.ModelSerializer):
 		model = Crop
 		#fields = ('category')
 		fields = '__all__'
-		
-
-class UserLimitedSerializer(serializers.ModelSerializer):
-	class Meta:
-		model = Seller
-		fields = ('id', 'email', 'category', 'name', 'gender', 'identificationNumber', 'address',
-		'phone', 'date_of_birth', 'is_active', 'is_admin')
-		read_only_fields = ('date_created', 'date_modified')
 
 class CropDetailSerializer(serializers.ModelSerializer):
 	userLimitedSerializer = UserLimitedSerializer()
 	cropSerializer = CropSerializer()
 	class Meta:
 		model = CropDetail
-		fields = ('userLimitedSerializer', 'cropSerializer', 'availableWeight', 'lat', 'lon')
+		exclude = ('password', )
 		depth = 1
 	
 
