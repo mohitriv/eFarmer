@@ -10,14 +10,20 @@ class CropSerializer(serializers.ModelSerializer):
 		#fields = ('category')
 		fields = '__all__'
 		
+class UserLimitedSerializer(serializers.ModelSerializer):
+	password = serializers.CharField(write_only=True, required=True)
+	class Meta:
+		model = User
+		fields = ('id', 'email', 'category', 'name', 'gender', 'identificationNumber', 'address',
+		'phone', 'date_of_birth', 'is_active', 'is_admin')
+		read_only_fields = ('date_created', 'date_modified')
 
 class CropDetailSerializer(serializers.ModelSerializer):
-
+	myfield = UserLimitedSerializer() 
 	class Meta:
 		model = CropDetail
-		fields = '__all__'
+		fields = '__all__' + 'myfield'
 		depth = 1
-
 
 class UserSerializer(serializers.ModelSerializer):
 	password = serializers.CharField(write_only=True, required=True)
@@ -33,7 +39,6 @@ class UserSerializer(serializers.ModelSerializer):
 		return User.objects.create_user(**validated_data)
 
 class SellerSerializer(UserSerializer):
-	password = serializers.CharField(write_only=True, required=True)
 	class Meta(UserSerializer.Meta):
 		model = Seller
 		fields = UserSerializer.Meta.fields
@@ -42,7 +47,6 @@ class SellerSerializer(UserSerializer):
 		return Seller.objects.create_user(**validated_data)
 
 class BuyerSerializer(UserSerializer):
-	password = serializers.CharField(write_only=True, required=True)
 	class Meta(UserSerializer.Meta):
 		model = Buyer
 		fields = UserSerializer.Meta.fields
