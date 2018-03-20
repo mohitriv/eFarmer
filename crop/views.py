@@ -24,6 +24,21 @@ from rest_framework.parsers import JSONParser
 Crops methods
 '''
 # Get all Crops
+
+class CropList(APIView):
+	def get(self, request, format=None):
+		category = request.GET.get('category')
+		if category is None: # /crop/
+			# Fetch all the crops and return the Crop objects
+			crops = Crop.objects.all()
+			cropSerializer = CropSerializer(crops, many=True)
+			return JsonResponse(cropSerializer.data, safe=False)
+		else: # /crop/catogory=Rice
+			crops = Crop.objects.filter(category__icontains=category)
+			cropSerializer = CropSerializer(crops, many=True)
+			return JsonResponse(cropSerializer.data, safe=False)	
+
+'''
 def getCrops(request, format=None):
 	category = request.GET.get('category')
 	if category is None: # /crop/
@@ -35,18 +50,36 @@ def getCrops(request, format=None):
 		crops = Crop.objects.filter(category__icontains=category)
 		cropSerializer = CropSerializer(crops, many=True)
 		return JsonResponse(cropSerializer.data, safe=False)
+'''
 
+class CropDetail(APIView):
+	def get(self, request, pk, format=None):
+		crop = get_object_or_404(Crop, pk=cropId)
+		cropSerializer = CropSerializer(crop)
+		return JsonResponse(cropSerializer.data)
+
+'''
 # Get Crop with id
 def getCropWithId(request, cropId, format=None):
 	crop = get_object_or_404(Crop, pk=cropId)
 	cropSerializer = CropSerializer(crop)
 	return JsonResponse(cropSerializer.data)
+'''
 
+class CropMetaDetail(APIView):
+	def get(self, request, pk, format=None):
+		cropDetail = get_object_or_404(CropDetail, crop__id=cropId)
+		cropDetailSerializer = CropDetailSerializer(cropDetail)
+		return JsonResponse(cropDetailSerializer.data)
+		
+
+'''
 # Get Crop detail with id
 def getCropDetail(request, cropId, format=None):
 	cropDetail = get_object_or_404(CropDetail, crop__id=cropId)
 	cropDetailSerializer = CropDetailSerializer(cropDetail)
 	return JsonResponse(cropDetailSerializer.data)
+'''
 
 '''
 Users methods
@@ -107,6 +140,8 @@ class UsersDetail(APIView):
 class Logout(APIView):
 
 	def get(self, request, format=None):
+		print("userrr")
+		print(request.user.auth_token)
 		request.user.auth_token.delete()
 		return Response(status=status.HTTP_200_OK)
 
