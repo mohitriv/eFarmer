@@ -69,7 +69,7 @@ class UsersList(APIView):
 		return Response(serializer.data)
    
 	def post(self, request, format=None):
-		if 'category' in request.data and request.data['category'].lower() == "Seller".lower():
+		if ('category' in request.data) and (request.data['category'].lower() == "Seller".lower()):
 			serializer = SellerSerializer(data=request.data)
 		else:
 			serializer = BuyerSerializer(data=request.data)
