@@ -1,4 +1,4 @@
-# eFarmer
+# eFarmer (This is currently in progress. More APIs are going to be added.)
 This is a server app, developed using Django framework and deployed on Heroku. The idea is to create a platform that will help farmers to sell their grains online directly to customers.
 
 ## API endpoints
