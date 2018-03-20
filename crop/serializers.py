@@ -33,6 +33,7 @@ class UserSerializer(serializers.ModelSerializer):
 		return User.objects.create_user(**validated_data)
 
 class SellerSerializer(UserSerializer):
+	password = serializers.CharField(write_only=True, required=True)
 	class Meta(UserSerializer.Meta):
 		model = Seller
 		fields = UserSerializer.Meta.fields
@@ -41,6 +42,7 @@ class SellerSerializer(UserSerializer):
 		return Seller.objects.create_user(**validated_data)
 
 class BuyerSerializer(UserSerializer):
+	password = serializers.CharField(write_only=True, required=True)
 	class Meta(UserSerializer.Meta):
 		model = Buyer
 		fields = UserSerializer.Meta.fields
