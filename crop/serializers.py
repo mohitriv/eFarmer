@@ -10,8 +10,8 @@ class CropSerializer(serializers.ModelSerializer):
 		#fields = ('category')
 		fields = '__all__'
 		
+
 class UserLimitedSerializer(serializers.ModelSerializer):
-	password = serializers.CharField(write_only=True, required=True)
 	class Meta:
 		model = User
 		fields = ('id', 'email', 'category', 'name', 'gender', 'identificationNumber', 'address',
@@ -19,11 +19,13 @@ class UserLimitedSerializer(serializers.ModelSerializer):
 		read_only_fields = ('date_created', 'date_modified')
 
 class CropDetailSerializer(serializers.ModelSerializer):
-	myfield = UserLimitedSerializer() 
+	userLimitedSerializer = UserLimitedSerializer()
+	cropSerializer = CropSerializer()
 	class Meta:
 		model = CropDetail
-		fields = ('myfield', )
+		fields = ('userLimitedSerializer', 'cropSerializer', 'availableWeight', 'lat', 'lon')
 		depth = 1
+	
 
 class UserSerializer(serializers.ModelSerializer):
 	password = serializers.CharField(write_only=True, required=True)
